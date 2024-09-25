@@ -1,3 +1,9 @@
-.test {
-	color: red;
+.page {
+    margin-top: 100px;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
