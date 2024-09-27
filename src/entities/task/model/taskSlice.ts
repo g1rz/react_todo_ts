@@ -5,6 +5,11 @@ type TaskState = {
     tasks: Task[];
 };
 
+type EditTask = {
+    id: number;
+    text: string;
+};
+
 const initialState: TaskState = {
     tasks: [],
 };
@@ -26,6 +31,15 @@ export const taskSlice = createSlice({
                 task.completed = !task.completed;
             }
         },
+        editTask: (state, action: PayloadAction<EditTask>) => {
+            const { id, text } = action.payload;
+            const task = state.tasks.find((task) => task.id === id);
+
+            if (!task) {
+                return;
+            }
+            task.text = text;
+        },
         deleteTask: (state, action: PayloadAction<number>) => {
             state.tasks = state.tasks.filter(
                 (task) => task.id !== action.payload,
@@ -34,5 +48,5 @@ export const taskSlice = createSlice({
     },
 });
 
-export const { addTask, toggleTask, deleteTask } = taskSlice.actions;
+export const { addTask, toggleTask, editTask, deleteTask } = taskSlice.actions;
 export default taskSlice.reducer;
