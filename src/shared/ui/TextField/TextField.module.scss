@@ -17,4 +17,13 @@
     &:focus {
         border-color: var(--color-gray-600);
     }
+
+    &:read-only:focus {
+        border-color: transparent;
+    }
+}
+
+.clear {
+    background: transparent;
+    border-color: transparent;
 }

@@ -1,38 +1,47 @@
 import clsx from 'clsx';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, forwardRef, InputHTMLAttributes } from 'react';
 
 import styles from './TextField.module.scss';
 
 type TextType = 'text' | 'phone' | 'email';
+type ViewType = 'default' | 'clear';
 
 type TextField = {
     value: string;
     onChange: (
         event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     ) => void;
+    view?: ViewType;
     placeholder?: string;
     className?: string;
+    isEdit?: boolean;
     type?: TextType;
-};
+} & Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'value' | 'type'>;
 
-export function TextField({
-    value,
-    onChange,
-    placeholder,
-    className,
-    type = 'text',
-    ...props
-}: TextField) {
-    return (
-        <input
-            type={type}
-            value={value}
-            onChange={onChange}
-            placeholder={placeholder}
-            className={clsx([styles.input, className])}
-            {...props}
-        />
-    );
-}
+export const TextField = forwardRef<HTMLInputElement, TextField>(
+    (props, ref) => {
+        const {
+            value,
+            onChange,
+            placeholder,
+            className,
+            type = 'text',
+            view = 'default',
+            isEdit = true,
+            ...otherProps
+        } = props;
 
-export default TextField;
+        return (
+            <input
+                type={type}
+                value={value}
+                onChange={onChange}
+                placeholder={placeholder}
+                readOnly={!isEdit}
+                className={clsx([styles.input, styles[view], className])}
+                {...otherProps}
+                ref={ref}
+            />
+        );
+    },
+);
