@@ -3,3 +3,8 @@ export type Task = {
     text: string;
     completed: boolean;
 };
+
+export type DraggelTask = Task & {
+    moveTask: (dragIndex: number, hoverIndex: number) => void;
+    index: number;
+};

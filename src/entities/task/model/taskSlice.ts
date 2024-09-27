@@ -45,8 +45,18 @@ export const taskSlice = createSlice({
                 (task) => task.id !== action.payload,
             );
         },
+        moveTask(
+            state,
+            action: PayloadAction<{ dragIndex: number; hoverIndex: number }>,
+        ) {
+            const { dragIndex, hoverIndex } = action.payload;
+            const dragTask = state.tasks[dragIndex];
+            state.tasks.splice(dragIndex, 1);
+            state.tasks.splice(hoverIndex, 0, dragTask);
+        },
     },
 });
 
-export const { addTask, toggleTask, editTask, deleteTask } = taskSlice.actions;
+export const { addTask, toggleTask, editTask, deleteTask, moveTask } =
+    taskSlice.actions;
 export default taskSlice.reducer;
