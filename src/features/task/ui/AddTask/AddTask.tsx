@@ -11,6 +11,11 @@ export function AddTask() {
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
 
+        if (textValue === '') {
+            alert('The task must not be empty');
+            return;
+        }
+
         dispatch(addTask(textValue.trim()));
         setTextValue('');
     };
